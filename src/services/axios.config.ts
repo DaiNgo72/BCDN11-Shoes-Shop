@@ -1,7 +1,8 @@
 import axios from "axios";
 
 // ENV
-const BASE_URL = "https://movienew.cybersoft.edu.vn/api";
+const BASE_URL = "https://shop.cyberlearn.vn/api/";
+
 const TOKEN_CYBER_SOFT =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCBETiAxMSIsIkhldEhhblN0cmluZyI6IjIyLzAxLzIwMjUiLCJIZXRIYW5UaW1lIjoiMTczNzUwNDAwMDAwMCIsIm5iZiI6MTcwOTc0NDQwMCwiZXhwIjoxNzM3NjUxNjAwfQ.nl0s6U9TVtfCtNNz9yMfG6ZupTn18NciJE96XGDOTmQ";
 // ENV
@@ -44,3 +45,25 @@ export const axiosWithAuth = axios.create({
     TokenCybersoft: TOKEN_CYBER_SOFT,
   },
 });
+
+// Thêm Authorization trước mỗi lần request khi gởi đi
+axiosWithAuth.interceptors.request.use(
+  (config) => {
+    if (localStorage.getItem("access_token")) {
+      config.headers['Authorization'] = `Bearer ${localStorage.getItem("access_token")}`
+      return config
+    }
+
+    return Promise.reject('Authorization')
+  },
+  (e) => Promise.reject(e)
+)
+
+axiosWithAuth.interceptors.response.use(
+  (value) => {
+    return value.data;
+  },
+  (e) => {
+    return Promise.reject(e);
+  },
+);
