@@ -38,7 +38,7 @@ export const signIn = (
   });
 };
 
-export const getProfile = () => {
+export const getProfile = (): Promise<{content:any}> => {
   return axiosWithAuth({
     method: "post",
     url: "Users/getProfile",

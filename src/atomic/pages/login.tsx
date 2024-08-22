@@ -25,6 +25,9 @@ export default function Login() {
 
           localStorage.setItem("access_token", resp.content.accessToken);
 
+          // Authentication: Bạn là ai
+          // Authorization: Bạn có quyền gì
+
           // Đăng nhập thành công
           // ....
           // Chuyển về trang home
